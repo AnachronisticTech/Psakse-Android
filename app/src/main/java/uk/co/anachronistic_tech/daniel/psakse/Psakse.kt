@@ -54,8 +54,8 @@ class Psakse : AppCompatActivity() {
             for (i in 0..((this.gridSize * this.gridSize) - 1)) {
                 val gridX = i % this.gridSize
                 val gridY = (i / this.gridSize)
-                val x = gridBorder + (gridX * tileHeight) + (gridX * tileSpacing)
-                val y = (gridBorder * 3) + (gridY * tileHeight) + (gridY * tileSpacing)
+                val x = (gridBorder + (gridX * tileHeight) + (gridX * tileSpacing)) as Float
+                val y = ((gridBorder * 3) + (gridY * tileHeight) + (gridY * tileSpacing)) as Float
                 val button = createButton(x, y, tileHeight, i)
                 this.buttonGrid.add(button)
             }
@@ -84,8 +84,8 @@ class Psakse : AppCompatActivity() {
             val tileHeight = (gridHeight - ((this.gridSize - 1) * tileSpacing)) / this.gridSize
             for (i in 0..4) {
                 val gridX = i % this.gridSize
-                val x = gridBorder + (gridX * tileHeight) + (gridX * tileSpacing)
-                val y = gridHeight + 100
+                val x = (gridBorder + (gridX * tileHeight) + (gridX * tileSpacing)) as Float
+                val y = (gridHeight + 100) as Float
                 val button = createButton(x, y, tileHeight, i)
                 this.buttonGrid.add(button)
             }
@@ -109,13 +109,13 @@ class Psakse : AppCompatActivity() {
             return view
         }
 
-        private fun createButton(x: Int, y: Int, height: Int, tag: Int): Button {
+        private fun createButton(x: Float, y: Float, height: Int, tag: Int): Button {
 //            val button = Button(frame: CGRect(x: x, y: y, width: height, height: height))
             val button = Button(this as Context)
             button.width = height
             button.height = height
-            button.x = x as Float
-            button.y = y as Float
+            button.x = x
+            button.y = y
             button.setBackgroundColor(Color.WHITE)
 //            button.adjustsImageWhenDisabled = false
             button.setText(tag)
@@ -265,7 +265,7 @@ class Psakse : AppCompatActivity() {
             val layout = findViewById<ConstraintLayout>(R.id.background)
             grid = Grid(gridSizeMaster)
             grid!!.drawMainGrid()
-            grid!!.drawMainBg()
+//            grid!!.drawMainBg()
             for (button in grid!!.buttonGrid) {
                 button.isEnabled = true
                 layout.addView(button)
@@ -275,7 +275,10 @@ class Psakse : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.activity_psakse)
+        var mainView = ConstraintLayout(this)
+        mainView.id = 0
+        setContentView(mainView)
+//        setContentView(R.layout.activity_psakse)
 //        resetGame()
         val button = Button(this)
         button.width = 100
@@ -283,7 +286,8 @@ class Psakse : AppCompatActivity() {
         button.x = 100.0f
         button.y = 100.0f
         button.setBackgroundColor(Color.BLACK)
-        val layout = findViewById<ConstraintLayout>(R.id.background)
+//        val layout = findViewById<ConstraintLayout>(R.id.background)
+        val layout = findViewById<ConstraintLayout>(mainView.id)
         layout.addView(button)
     }
 
