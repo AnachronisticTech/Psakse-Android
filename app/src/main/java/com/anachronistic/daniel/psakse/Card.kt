@@ -6,14 +6,7 @@ abstract class Card {
     abstract fun getColor(): Int
 }
 
-class Normal : Card {
-    var symbol: Symbols
-    var color: Colors
-
-    constructor(symbol: Symbols, color: Colors) {
-        this.symbol = symbol
-        this.color = color
-    }
+class Normal(private var symbol: Symbols, private var color: Colors): Card() {
 
     override fun getFilename(): String {
         return when (symbol) {
@@ -26,10 +19,10 @@ class Normal : Card {
 
     override fun getColor(): Int {
         return when (color) {
-            Colors.Green -> 0xAFE346
-            Colors.Yellow -> 0xFFDC73
-            Colors.Purple -> 0xECA7EE
-            Colors.Orange -> 0xFF9933
+            Colors.Green -> R.color.gameGreen
+            Colors.Yellow -> R.color.gameYellow
+            Colors.Purple -> R.color.gamePurple
+            Colors.Orange -> R.color.gameOrange
         }
     }
 
@@ -43,17 +36,13 @@ class Normal : Card {
     }
 }
 
-class Wild : Card {
-    constructor() {
-
-    }
-
+class Wild: Card() {
     override fun getFilename(): String {
         return "dot"
     }
 
     override fun getColor(): Int {
-        return 0xFFB4BC
+        return R.color.gameWild
     }
 
     override fun matches(other: Card): Boolean {

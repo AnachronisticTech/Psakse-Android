@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 
@@ -40,7 +40,7 @@ class GameViewController: Activity() {
         resetGame(this, dSize)
 
 //
-//        var button = Button(this)
+//        var button = ImageButton(this)
 //        button.text = "My button"
 //        button.layoutParams = params
 //
@@ -125,7 +125,7 @@ class GameViewController: Activity() {
         grid!!.buttonGrid[gridSize * gridSize].setAttrs(image, bgcolor)
     }
 
-    fun select(sender: Button): View.OnClickListener {
+    fun select(sender: ImageButton): View.OnClickListener {
         return View.OnClickListener {
 
         }

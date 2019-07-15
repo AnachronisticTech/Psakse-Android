@@ -2,31 +2,34 @@ package com.anachronistic.daniel.psakse
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.widget.Button
+import android.support.v4.content.ContextCompat
+import android.widget.ImageButton
 
-fun Button.reset() {
-    this.text = ""
-    this.setTextColor(Color.WHITE)
+fun ImageButton.reset() {
     this.setBackgroundColor(Color.WHITE)
     this.setBorder(0, Color.WHITE)
 }
 
-fun Button.setAttrs(image: String, bgColor: Int) {
-    when (image) {
-        "psi"   -> this.text = "psi"//this.setBackgroundResource(R.drawable.psi)
-        "a"     -> this.setBackgroundResource(R.drawable.a)
-        "xi"    -> this.setBackgroundResource(R.drawable.xi)
-        "e"     -> this.setBackgroundResource(R.drawable.e)
-        "clear" -> this.setBackgroundResource(R.drawable.clear)
-        "empty" -> this.setBackgroundResource(R.drawable.none)
+fun ImageButton.setAttrs(image: String, bgColor: Int) {
+    if (bgColor == Color.WHITE) {
+        this.setBackgroundColor(bgColor)
+    } else {
+        this.setBackgroundColor(ContextCompat.getColor(this.context, bgColor))
     }
-    this.setBackgroundColor(bgColor)
+    when (image) {
+        "psi"   -> this.setImageResource(R.drawable.psi)
+        "a"     -> this.setImageResource(R.drawable.a)
+        "xi"    -> this.setImageResource(R.drawable.xi)
+        "e"     -> this.setImageResource(R.drawable.e)
+        "clear" -> this.setImageResource(R.drawable.clear)
+        "empty" -> this.setImageResource(R.drawable.none)
+    }
 }
 
-fun Button.setBorder(width: Int, color: Int) {
-    val layer = GradientDrawable()
-    layer.cornerRadius = 0.0f
-    layer.setStroke(width, color)
-    layer.setColor(Color.GREEN)
-    this.background = layer
+fun ImageButton.setBorder(width: Int, color: Int) {
+//    val layer = GradientDrawable()
+//    layer.cornerRadius = 0.0f
+//    layer.setStroke(width, color)
+//    layer.setColor(Color.GREEN)
+//    this.background = layer
 }

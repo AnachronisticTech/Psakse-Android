@@ -4,17 +4,17 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.GradientDrawable
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.FrameLayout
-import android.widget.LinearLayout
+import android.widget.ImageView
 
-class Grid {
-    var gridSize = 5
+class Grid(gridSize: Int, display: Point) {
+    private var gridSize = 5
     var grid = arrayOfNulls<Card>(30)
-    var buttonGrid = arrayListOf<Button>()
-    var display = Point()
+    var buttonGrid = arrayListOf<ImageButton>()
+    private var display = Point()
 
-    constructor(gridSize: Int, display: Point) {
+    init {
         this.gridSize = gridSize
         this.grid = arrayOfNulls(gridSize * (gridSize + 1))
         this.display = display
@@ -40,7 +40,7 @@ class Grid {
         gridView.layoutParams = params
         gridView.x = gridMargin.toFloat()
         gridView.y = gridMargin.toFloat()
-        gridView.setBackgroundColor(Color.GRAY)
+        gridView.setBackgroundColor(Color.BLACK)
         val tileHeight = (gridHeight - ((gridSize - 1) * tileMargin)) / gridSize
         for (i in 0 until (gridSize * gridSize)) {
             val gridX = i % gridSize
@@ -62,8 +62,8 @@ class Grid {
         gridView.layoutParams = params
         gridView.x = gridMargin.toFloat()
         gridView.y = ((gridMargin * 2) + gridWidth).toFloat()
-        gridView.setBackgroundColor(Color.GRAY)
-        for (i in -1 until 5) {
+        gridView.setBackgroundColor(Color.BLACK)
+        for (i in 0 until 5) {
             val gridX = i % gridSize
             val x = gridX * (tileHeight + tileMargin)
             val button = createButton(x, tileMargin, tileHeight, i + (gridSize * gridSize), view)
@@ -73,14 +73,14 @@ class Grid {
         return gridView
     }
 
-    private fun createButton(x: Int, y: Int, height: Int, tag: Int, view: Context): Button {
-        val button = Button(view)
+    private fun createButton(x: Int, y: Int, height: Int, tag: Int, view: Context): ImageButton {
+        val button = ImageButton(view)
         val layer = GradientDrawable()
         layer.cornerRadius = 0.0f
         layer.setStroke(0, 0x00000000)
         button.background = layer
+        button.scaleType = ImageView.ScaleType.CENTER_CROP
         button.setBackgroundColor(Color.WHITE)
-        button.text = tag.toString()
         button.tag = tag
         val params = FrameLayout.LayoutParams(height, height)
         params.leftMargin = x

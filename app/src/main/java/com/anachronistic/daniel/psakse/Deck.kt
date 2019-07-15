@@ -1,6 +1,5 @@
 package com.anachronistic.daniel.psakse
 
-
 class Deck {
 
     val allCards = arrayListOf<Card>(
@@ -35,7 +34,7 @@ class Deck {
     }
 
     fun addWildCards(count: Int)  {
-        for (i in 0..(count - 1)) {
+        for (i in 0 until count) {
             this.arr.add(Wild())
         }
     }
