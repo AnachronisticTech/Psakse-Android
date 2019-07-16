@@ -9,4 +9,7 @@
     <color name="gamePurple">#ECA7EE</color>
     <color name="gameOrange">#FF9933</color>
     <color name="gameWild">#FFB4BC</color>
+    <color name="gameWhite">#FFFFFF</color>
+    <color name="gameFBorder">#FFFF00</color>
+    <color name="gameSBorder">#000000</color>
 </resources>
