@@ -4,26 +4,17 @@ abstract class Card {
     abstract fun matches(other: Card): Boolean
     abstract fun getFilename(): String
     abstract fun getColor(): Int
+    abstract fun getID(): String
 }
 
 class Normal(private var symbol: Symbols, private var color: Colors): Card() {
 
     override fun getFilename(): String {
-        return when (symbol) {
-            Symbols.Psi -> "psi"
-            Symbols.A -> "a"
-            Symbols.Xi -> "xi"
-            Symbols.E -> "e"
-        }
+        return symbol.getFilename()
     }
 
     override fun getColor(): Int {
-        return when (color) {
-            Colors.Green -> R.color.gameGreen
-            Colors.Yellow -> R.color.gameYellow
-            Colors.Purple -> R.color.gamePurple
-            Colors.Orange -> R.color.gameOrange
-        }
+        return color.getColor()
     }
 
     override fun matches(other: Card): Boolean {
@@ -33,6 +24,10 @@ class Normal(private var symbol: Symbols, private var color: Colors): Card() {
             val otherCard = other as Normal
             return (this.symbol == otherCard.symbol) || (this.color == otherCard.color)
         }
+    }
+
+    override fun getID(): String {
+        return color.getID() + symbol.getID()
     }
 }
 
@@ -47,5 +42,9 @@ class Wild: Card() {
 
     override fun matches(other: Card): Boolean {
         return true
+    }
+
+    override fun getID(): String {
+        return ""
     }
 }

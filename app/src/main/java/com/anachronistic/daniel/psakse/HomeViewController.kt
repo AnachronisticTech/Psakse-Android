@@ -39,6 +39,7 @@ class HomeViewController: Activity() {
             button.layoutParams = bParams
             button.text = options[i]
             val layer = GradientDrawable()
+            layer.cornerRadius = 90.0f
             layer.setStroke(9, Color.DKGRAY)
             when (i) {
                 0 -> {
@@ -47,7 +48,7 @@ class HomeViewController: Activity() {
                 }
                 1 -> {
                     layer.setColor(ContextCompat.getColor(this, R.color.gameYellow))
-                    button.setOnClickListener(comingSoon())
+                    button.setOnClickListener(goToPuzzleSelect())
                 }
                 2 -> {
                     layer.setColor(ContextCompat.getColor(this, R.color.gamePurple))

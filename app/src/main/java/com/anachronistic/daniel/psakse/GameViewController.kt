@@ -71,7 +71,19 @@ class GameViewController: Activity() {
 
         // Create deck from override or procedurally
         if (override != null) {
-            // override deck creation here
+            var locked = override!!.dropLast(17)
+            for (i in 0 until 3) {
+                val pos = Integer.parseInt(locked.take(2))
+                val col = locked.take(4).take(1)
+                val sym = locked.take(4).takeLast(1)
+                locked = locked.drop(4)
+                val card = deck!!.stringToCard(col, sym)
+                val image = card.getFilename()
+                val bgcolor = card.getColor()
+                grid!!.buttonGrid[pos].setAttrs(image, bgcolor, 9, R.color.gameFBorder)
+                grid!!.grid[pos] = card
+            }
+            deck!!.arr = deck!!.createDeckFromString(override!!.drop(12))
         } else {
             deck?.populateDeck()
             deck?.finalShuffle()
@@ -100,9 +112,10 @@ class GameViewController: Activity() {
                 grid!!.buttonGrid[i].isEnabled = false
                 grid!!.grid[i] = deck!!.arr[0]
                 val card = deck!!.arr.removeAt(0)
-                // update quantities for puzzlesig
-                //
+//                deck!!.updateQuantities(card)
+                puzzleSig += (if (i < 10) {"0"} else {""}) + i + card.getID()
             }
+            puzzleSig += deck!!.cardQuantities.joinToString("")
             deck?.addWildCards(wildcards)
         }
 

@@ -92,8 +92,8 @@ class Grid(gridSize: Int, display: Point) {
         val button = Button(view)
         button.text = "New game"
         val layer = GradientDrawable()
-        layer.cornerRadius = 0.0f
-        layer.setStroke(0, 0x00000000)
+        layer.cornerRadius = 90.0f
+        layer.setStroke(9, Color.DKGRAY)
         layer.setColor(ContextCompat.getColor(view, R.color.gamePurple))
         button.background = layer
         val params = LinearLayout.LayoutParams(display.x - 120, 180)

@@ -2,7 +2,7 @@ package com.anachronistic.daniel.psakse
 
 class Deck {
 
-    val allCards = arrayListOf<Card>(
+    private val allCards = arrayListOf(
         Normal(Symbols.Psi, Colors.Green),
         Normal(Symbols.A, Colors.Green),
         Normal(Symbols.Xi, Colors.Green),
@@ -21,7 +21,7 @@ class Deck {
         Normal(Symbols.E, Colors.Orange),
         Wild()
     )
-    var cardQuantities = IntArray(17) { _ -> 2 }
+    var cardQuantities = IntArray(17) { 2 }
     var arr = arrayListOf<Card>()
 
     fun populateDeck() {
@@ -46,16 +46,60 @@ class Deck {
         }
     }
 
-    fun updateQuantities(card: Card) {}
+    fun updateQuantities(card: Card) {
+        val index = allCards.indexOf(card)
+        cardQuantities[index] -= 1
+    }
 
     fun createDeckFromString(string: String): ArrayList<Card> {
-        var deck = arrayListOf<Card>()
+        var str = string
+        val cards = allCards
+        val deck = arrayListOf<Card>()
+        for (i in 0 until cards.size) {
+            val quantity = Integer.parseInt(str.take(1))
+            str = str.drop(1)
+            val arr = Array(quantity) { cards[i]}
+            deck.addAll(arr)
+        }
         return deck
     }
 
     fun stringToCard(col: String, sym: String): Card {
-        var card: Card
-        card = Wild()
+        var card: Card = Wild()
+        when (col) {
+            "g" -> {
+                when (sym) {
+                    "p" -> card = Normal(Symbols.Psi, Colors.Green)
+                    "a" -> card = Normal(Symbols.A, Colors.Green)
+                    "x" -> card = Normal(Symbols.Xi, Colors.Green)
+                    "e" -> card = Normal(Symbols.E, Colors.Green)
+                }
+            }
+            "y" -> {
+                when (sym) {
+                    "p" -> card = Normal(Symbols.Psi, Colors.Yellow)
+                    "a" -> card = Normal(Symbols.A, Colors.Yellow)
+                    "x" -> card = Normal(Symbols.Xi, Colors.Yellow)
+                    "e" -> card = Normal(Symbols.E, Colors.Yellow)
+                }
+            }
+            "p" -> {
+                when (sym) {
+                    "p" -> card = Normal(Symbols.Psi, Colors.Purple)
+                    "a" -> card = Normal(Symbols.A, Colors.Purple)
+                    "x" -> card = Normal(Symbols.Xi, Colors.Purple)
+                    "e" -> card = Normal(Symbols.E, Colors.Purple)
+                }
+            }
+            "o" -> {
+                when (sym) {
+                    "p" -> card = Normal(Symbols.Psi, Colors.Orange)
+                    "a" -> card = Normal(Symbols.A, Colors.Orange)
+                    "x" -> card = Normal(Symbols.Xi, Colors.Orange)
+                    "e" -> card = Normal(Symbols.E, Colors.Orange)
+                }
+            }
+        }
         return card
     }
 
