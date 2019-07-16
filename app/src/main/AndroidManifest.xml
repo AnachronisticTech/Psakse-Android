@@ -7,11 +7,13 @@
                  android:roundIcon="@mipmap/ic_launcher_round"
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme">
-        <activity android:name=".GameViewController">
+        <activity android:name=".HomeViewController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".GameViewController"></activity>
+        <activity android:name=".SelectViewController"></activity>
     </application>
 </manifest>

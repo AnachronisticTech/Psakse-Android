@@ -58,14 +58,15 @@ class GameViewController: Activity() {
             val params = LinearLayout.LayoutParams(display.x - 60, display.y)
             val gridView = grid?.create(view)
             gridView?.layoutParams = params
+            val resetBtn = grid!!.drawControls(this)
+            resetBtn.setOnClickListener(resetHandler())
+            gridView?.addView(resetBtn)
             this.addContentView(gridView, params)
             for (button in grid?.buttonGrid!!) {
                 button.reset()
                 button.setOnClickListener(select(button))
                 button.isEnabled = true
             }
-
-            // Create in-game controls here
         }
 
         // Create deck from override or procedurally
@@ -96,7 +97,6 @@ class GameViewController: Activity() {
                 val image = deck!!.arr[0].getFilename()
                 val bgcolor = deck!!.arr[0].getColor()
                 grid!!.buttonGrid[i].setAttrs(image, bgcolor, 9, R.color.gameFBorder)
-//                grid!!.buttonGrid[i].setBorder(9, Color.YELLOW, bgcolor)
                 grid!!.buttonGrid[i].isEnabled = false
                 grid!!.grid[i] = deck!!.arr[0]
                 val card = deck!!.arr.removeAt(0)
@@ -291,6 +291,12 @@ class GameViewController: Activity() {
             return card.matches(grid!!.grid[position]!!)
         } else {
             return true
+        }
+    }
+
+    fun resetHandler(): View.OnClickListener {
+        return View.OnClickListener {
+            resetGame(this, dSize)
         }
     }
 }

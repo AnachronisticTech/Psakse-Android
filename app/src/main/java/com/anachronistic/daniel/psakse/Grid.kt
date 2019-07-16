@@ -4,9 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.GradientDrawable
-import android.widget.ImageButton
-import android.widget.FrameLayout
-import android.widget.ImageView
+import android.support.v4.content.ContextCompat
+import android.widget.*
 
 class Grid(gridSize: Int, display: Point) {
     private var gridSize = 5
@@ -85,6 +84,21 @@ class Grid(gridSize: Int, display: Point) {
         val params = FrameLayout.LayoutParams(height, height)
         params.leftMargin = x
         params.topMargin = y
+        button.layoutParams = params
+        return button
+    }
+
+    fun drawControls(view: Context): Button {
+        val button = Button(view)
+        button.text = "New game"
+        val layer = GradientDrawable()
+        layer.cornerRadius = 0.0f
+        layer.setStroke(0, 0x00000000)
+        layer.setColor(ContextCompat.getColor(view, R.color.gamePurple))
+        button.background = layer
+        val params = LinearLayout.LayoutParams(display.x - 120, 180)
+        params.leftMargin = 60
+        params.topMargin = (display.x * 1.25).toInt()
         button.layoutParams = params
         return button
     }
