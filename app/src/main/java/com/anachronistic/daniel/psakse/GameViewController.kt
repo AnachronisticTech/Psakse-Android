@@ -50,6 +50,7 @@ class GameViewController: Activity() {
         deck = Deck()
         if (grid != null) {
             for (i in 0 until grid?.buttonGrid!!.size) {
+                grid?.grid!![i] = null
                 grid?.buttonGrid!![i].reset()
                 grid?.buttonGrid!![i].isEnabled = true
             }
