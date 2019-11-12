@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="gameGreen">#AFE346</color>
+    <color name="gameYellow">#FFDC73</color>
+    <color name="gamePurple">#ECA7EE</color>
+    <color name="gameOrange">#FF9933</color>
+    <color name="gameWild">#FFB4BC</color>
+    <color name="gameWhite">#FFFFFF</color>
+    <color name="gameFBorder">#FFFF00</color>
+    <color name="gameSBorder">#000000</color>
 </resources>
