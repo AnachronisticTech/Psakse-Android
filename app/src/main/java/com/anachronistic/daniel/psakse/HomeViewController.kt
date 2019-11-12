@@ -48,7 +48,8 @@ class HomeViewController: Activity() {
                 }
                 1 -> {
                     layer.setColor(ContextCompat.getColor(this, R.color.gameYellow))
-                    button.setOnClickListener(goToPuzzleSelect())
+//                    button.setOnClickListener(goToPuzzleSelect())
+                    button.setOnClickListener(comingSoon())
                 }
                 2 -> {
                     layer.setColor(ContextCompat.getColor(this, R.color.gamePurple))
