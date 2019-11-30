@@ -35,7 +35,7 @@ class Grid(private val gridSize: Int, mainGrid: FrameLayout, subGrid: FrameLayou
         for (i in 0 until 5) {
             val gridX = i % gridSize
             val x = gridX * (tileHeight + tileMargin)
-            val button = createButton(x, 5, tileHeight, i, context)
+            val button = createButton(x, 5, tileHeight, i + (gridSize * gridSize), context)
             buttonGrid.add(button)
             gridUI.addView(button)
         }

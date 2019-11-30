@@ -2,14 +2,12 @@ package com.anachronistic.daniel.psakse
 
 import android.content.Context
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.Toast
-//import androidx.core.view.doOnLayout
+import androidx.core.view.doOnLayout
 
 class GameViewController: AppCompatActivity() {
 
@@ -32,25 +30,11 @@ class GameViewController: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_view_controller)
 
-        // TODO: Fix this mess
-        val context = this
-        val rootView: ConstraintLayout = findViewById(R.id.root)
-//        rootView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-//            override fun onGlobalLayout() {
-//                mainGrid = findViewById(R.id.mainGrid)
-//                subGrid = findViewById(R.id.subGrid)
-//                resetGame(context)
-//            }
-//        })
-//        rootView.doOnLayout {
-//                mainGrid = findViewById(R.id.mainGrid)
-//                subGrid = findViewById(R.id.subGrid)
-//                resetGame(context)
-//        }
-    }
-
-    override fun onResume() {
-        super.onResume()
+        window.decorView.findViewById<View>(R.id.root).doOnLayout {
+            mainGrid = findViewById(R.id.mainGrid)
+            subGrid = findViewById(R.id.subGrid)
+            resetGame(it.context)
+        }
     }
 
     // TODO: Implement
@@ -164,6 +148,7 @@ class GameViewController: AppCompatActivity() {
                         deselect()
                         if (deck!!.arr.size == 0) {
                             // If deck empty check grid full
+                            // TODO: This don't work!
                             val arr: List<Boolean> = grid!!.grid.map { a -> a != null }
                             arr.dropLast(5)
                             if (arr.contains(false)) {
@@ -203,8 +188,8 @@ class GameViewController: AppCompatActivity() {
                     val image = activeCard!!.getFilename()
                     val color = activeCard!!.getColor()
                     grid!!.buttonGrid[location].setAttrs(image, color, 9, R.color.gameSBorder)
-                    lastSelected = location
                 }
+                lastSelected = location
             }
         }
     }
@@ -259,51 +244,51 @@ class GameViewController: AppCompatActivity() {
         if (position < gridSize) {
             if (position == 0) {
                 // Bottom right corner; check tiles left and above
-                if (checkTile(left(position), card)) { return false }
-                if (checkTile(up(position), card)) { return false }
+                if (!checkTile(left(position), card)) { return false }
+                if (!checkTile(up(position), card)) { return false }
             } else if (position == gridSize - 1) {
                 // Bottom left corner; check tiles right and above
-                if (checkTile(right(position), card)) { return false }
-                if (checkTile(up(position), card)) { return false }
+                if (!checkTile(right(position), card)) { return false }
+                if (!checkTile(up(position), card)) { return false }
             } else {
                 // Bottom edge; check tiles left, right and above
-                if (checkTile(left(position), card)) { return false }
-                if (checkTile(right(position), card)) { return false }
-                if (checkTile(up(position), card)) { return false }
+                if (!checkTile(left(position), card)) { return false }
+                if (!checkTile(right(position), card)) { return false }
+                if (!checkTile(up(position), card)) { return false }
             }
         } else if (position % gridSize == 0) {
             if (position == gridSize * (gridSize - 1)) {
                 // Top right corner; check tiles left and below
-                if (checkTile(left(position), card)) { return false }
-                if (checkTile(down(position), card)) { return false }
+                if (!checkTile(left(position), card)) { return false }
+                if (!checkTile(down(position), card)) { return false }
             } else {
                 // Right edge; check tiles left, above and below
-                if (checkTile(left(position), card)) { return false }
-                if (checkTile(up(position), card)) { return false }
-                if (checkTile(down(position), card)) { return false }
+                if (!checkTile(left(position), card)) { return false }
+                if (!checkTile(up(position), card)) { return false }
+                if (!checkTile(down(position), card)) { return false }
             }
         } else if (position % gridSize == gridSize - 1) {
             if (position == (gridSize * gridSize) - 1) {
                 // Top left corner; check tiles right and below
-                if (checkTile(right(position), card)) { return false }
-                if (checkTile(down(position), card)) { return false }
+                if (!checkTile(right(position), card)) { return false }
+                if (!checkTile(down(position), card)) { return false }
             } else {
                 // Left edge; check tiles right, above and below
-                if (checkTile(right(position), card)) { return false }
-                if (checkTile(up(position), card)) { return false }
-                if (checkTile(down(position), card)) { return false }
+                if (!checkTile(right(position), card)) { return false }
+                if (!checkTile(up(position), card)) { return false }
+                if (!checkTile(down(position), card)) { return false }
             }
         } else if (position > gridSize * (gridSize - 1)) {
             // Top edge; check tiles left, right and below
-            if (checkTile(left(position), card)) { return false }
-            if (checkTile(right(position), card)) { return false }
-            if (checkTile(down(position), card)) { return false }
+            if (!checkTile(left(position), card)) { return false }
+            if (!checkTile(right(position), card)) { return false }
+            if (!checkTile(down(position), card)) { return false }
         } else {
             // Central tile; check tiles left, right, above and below
-            if (checkTile(left(position), card)) { return false }
-            if (checkTile(right(position), card)) { return false }
-            if (checkTile(up(position), card)) { return false }
-            if (checkTile(down(position), card)) { return false }
+            if (!checkTile(left(position), card)) { return false }
+            if (!checkTile(right(position), card)) { return false }
+            if (!checkTile(up(position), card)) { return false }
+            if (!checkTile(down(position), card)) { return false }
         }
         return true
     }
