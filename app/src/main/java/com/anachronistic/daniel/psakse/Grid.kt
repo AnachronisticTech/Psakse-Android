@@ -15,6 +15,7 @@ class Grid(private val gridSize: Int, mainGrid: FrameLayout, subGrid: FrameLayou
     }
 
     private fun drawMainGrid(gridUI: FrameLayout) {
+        // TODO: Get width as float
         val gridHeight = gridUI.width
         val tileHeight: Int = (gridHeight - ((gridSize - 1) * tileMargin)) / gridSize
         for (i in 0 until (gridSize * gridSize)) {
@@ -29,13 +30,14 @@ class Grid(private val gridSize: Int, mainGrid: FrameLayout, subGrid: FrameLayou
     }
 
     private fun drawSubGrid(gridUI: FrameLayout) {
+        // TODO: Get width as float
         val gridWidth = gridUI.width
         val tileHeight = (gridWidth - ((gridSize - 1) * tileMargin)) / gridSize
         setHeight(gridUI, tileHeight)
         for (i in 0 until 5) {
             val gridX = i % gridSize
             val x = gridX * (tileHeight + tileMargin)
-            val button = createButton(x, 5, tileHeight, i + (gridSize * gridSize), context)
+            val button = createButton(x, tileMargin, tileHeight, i + (gridSize * gridSize), context)
             buttonGrid.add(button)
             gridUI.addView(button)
         }
@@ -43,7 +45,7 @@ class Grid(private val gridSize: Int, mainGrid: FrameLayout, subGrid: FrameLayou
 
     private fun setHeight(gridUI: FrameLayout, height: Int) {
         val params = gridUI.layoutParams
-        params.height = height
+        params.height = height + (2 * tileMargin)
         gridUI.layoutParams = params
     }
 
@@ -54,6 +56,7 @@ class Grid(private val gridSize: Int, mainGrid: FrameLayout, subGrid: FrameLayou
         params.leftMargin = x
         params.topMargin = y
         button.layoutParams = params
+        button.scaleType = ImageView.ScaleType.CENTER_CROP
         button.reset()
         return button
     }

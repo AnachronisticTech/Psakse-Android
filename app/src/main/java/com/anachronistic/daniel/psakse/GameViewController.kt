@@ -2,6 +2,7 @@ package com.anachronistic.daniel.psakse
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.FrameLayout
@@ -148,10 +149,8 @@ class GameViewController: AppCompatActivity() {
                         deselect()
                         if (deck!!.arr.size == 0) {
                             // If deck empty check grid full
-                            // TODO: This don't work!
-                            val arr: List<Boolean> = grid!!.grid.map { a -> a != null }
-                            arr.dropLast(5)
-                            if (arr.contains(false)) {
+                            val arr: List<Boolean> = grid!!.grid.map{ a -> a != null }.dropLast(5)
+                            if (!arr.contains(false)) {
                                 // If grid full, game is complete
                                 gameComplete = true
                                 // TODO: save completion or send to server
