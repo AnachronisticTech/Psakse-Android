@@ -57,6 +57,7 @@ class Grid(private val gridSize: Int, mainGrid: FrameLayout, subGrid: FrameLayou
         params.topMargin = y
         button.layoutParams = params
         button.scaleType = ImageView.ScaleType.CENTER_CROP
+        button.isSoundEffectsEnabled = false
         button.reset()
         return button
     }
