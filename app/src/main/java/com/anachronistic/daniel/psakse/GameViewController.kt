@@ -166,11 +166,20 @@ class GameViewController: AppCompatActivity() {
                             if (!arr.contains(false)) {
                                 // If grid full, game is complete
                                 gameComplete = true
-                                // TODO: save completion or send to server
+                                if (puzzleID != null) {
+                                    // TODO: save completion
+                                } else {
+                                    sendToServer(puzzleSig)
+                                }
                                 for (i in grid!!.buttonGrid) {
                                     i.isEnabled = false
                                 }
-                                Toast.makeText(this, "You solved the puzzle!", Toast.LENGTH_SHORT).show()
+                                val alert = AlertDialog.Builder(this)
+                                alert.setTitle("Puzzle complete!")
+                                alert.setMessage("You solved the puzzle! Would you like to play again?")
+                                alert.setPositiveButton("Yes") { _, _ -> resetGame(this) }
+                                alert.setNegativeButton("No", null)
+                                alert.show()
                             }
                         }
                     } else {
