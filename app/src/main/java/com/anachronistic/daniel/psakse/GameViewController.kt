@@ -1,13 +1,17 @@
 package com.anachronistic.daniel.psakse
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 
 class GameViewController: AppCompatActivity() {
@@ -23,23 +27,33 @@ class GameViewController: AppCompatActivity() {
     private var override: String? = null
     private var puzzleSig: String = ""
 
-    // TODO: Add button views
     private var mainGrid: FrameLayout? = null
     private var subGrid: FrameLayout? = null
+    private var newView: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_view_controller)
+        supportActionBar?.hide()
 
         window.decorView.findViewById<View>(R.id.root).doOnLayout {
             mainGrid = findViewById(R.id.mainGrid)
             subGrid = findViewById(R.id.subGrid)
+            newView = findViewById(R.id.newView)
             resetGame(it.context)
         }
     }
 
-    // TODO: Implement
-    private fun setupButtonView(button: ImageButton, title: String, color: Colors) {}
+    private fun setupButtonView(button: Button, title: String, color: Colors, action: View.OnClickListener) {
+        button.text = title
+        val layer = GradientDrawable()
+        layer.cornerRadius = 90.0f
+        layer.setStroke(9, Color.DKGRAY)
+        layer.setColor(ContextCompat.getColor(this, color.getColor()))
+        button.background = layer
+        button.isSoundEffectsEnabled = false
+        button.setOnClickListener(action)
+    }
 
     private fun resetGame(context: Context) {
         gameComplete = false
@@ -55,11 +69,10 @@ class GameViewController: AppCompatActivity() {
             }
 
             // Create in game controls
-            // TODO: Pass subviews
             if (puzzleID != null) {
-//                setupButtonView(, "Reset", Colors.Purple)
+                setupButtonView(newView!!, "Reset", Colors.Purple, newGame())
             } else {
-//                setupButtonView(, "New Game", Colors.Purple)
+                setupButtonView(newView!!, "New Game", Colors.Purple, newGame())
             }
         }
 
@@ -292,9 +305,18 @@ class GameViewController: AppCompatActivity() {
         return true
     }
 
-    fun resetHandler(): View.OnClickListener {
+    private fun newGame(): View.OnClickListener {
         return View.OnClickListener {
-            resetGame(this)
+            if (gameComplete) {
+                resetGame(this)
+            } else {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Puzzle not finished!")
+                alert.setMessage("Are you sure you want a new puzzle? All progress on this one will be lost.")
+                alert.setPositiveButton("Yes") { _, _ -> resetGame(this) }
+                alert.setNegativeButton("No", null)
+                alert.show()
+            }
         }
     }
 }
