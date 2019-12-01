@@ -31,12 +31,18 @@ class SelectViewController : AppCompatActivity() {
 
     data class Puzzle(val numID: Int, val id: String, val properties: String)
 
-    class PuzzlesAdapter(context: Context, puzzles: ArrayList<Puzzle>): ArrayAdapter<Puzzle>(context, android.R.layout.simple_list_item_1, puzzles) {
+    class PuzzlesAdapter(context: Context, private val puzzles: ArrayList<Puzzle>): ArrayAdapter<Puzzle>(context, android.R.layout.simple_list_item_1, puzzles) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val newView: View = convertView ?: LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false)
             val textView = newView.findViewById<TextView>(android.R.id.text1)
-            textView.text = "Puzzle ${position + 1}"
+
+            val preferences = context.getSharedPreferences("Psakse", Context.MODE_PRIVATE)
+            textView.text = if (preferences.getBoolean(puzzles[position].id, false)) {
+                "Puzzle ${position + 1} - Solved"
+            } else {
+                "Puzzle ${position + 1}"
+            }
 
             return newView
         }

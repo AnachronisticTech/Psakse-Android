@@ -170,7 +170,10 @@ class GameViewController: AppCompatActivity() {
                                 // If grid full, game is complete
                                 gameComplete = true
                                 if (puzzleID != null) {
-                                    // TODO: save completion
+                                    val preferences = this.getSharedPreferences("Psakse", Context.MODE_PRIVATE)
+                                    val editor = preferences.edit()
+                                    editor.putBoolean(puzzleID, true)
+                                    editor.apply()
                                 } else {
                                     sendToServer(puzzleSig)
                                 }
