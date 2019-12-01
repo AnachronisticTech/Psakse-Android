@@ -25,5 +25,6 @@
             android:name=".SelectViewController"
             android:screenOrientation="portrait" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

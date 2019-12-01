@@ -36,6 +36,9 @@ class GameViewController: AppCompatActivity() {
         setContentView(R.layout.activity_game_view_controller)
         supportActionBar?.hide()
 
+        puzzleID = intent.getStringExtra("puzzleID")
+        override = intent.getStringExtra("override")
+
         window.decorView.findViewById<View>(R.id.root).doOnLayout {
             mainGrid = findViewById(R.id.mainGrid)
             subGrid = findViewById(R.id.subGrid)
@@ -81,7 +84,7 @@ class GameViewController: AppCompatActivity() {
             var locked = override!!.dropLast(17)
             for (i in 0 until 3) {
                 val pos = Integer.parseInt(locked.take(2))
-                val col = locked.take(4).take(1)
+                val col = locked.take(4).take(3).takeLast(1)
                 val sym = locked.take(4).takeLast(1)
                 locked = locked.drop(4)
                 val card = deck!!.stringToCard(col, sym)
