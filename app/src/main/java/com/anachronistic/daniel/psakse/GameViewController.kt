@@ -1,6 +1,7 @@
 package com.anachronistic.daniel.psakse
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -29,6 +30,7 @@ class GameViewController: AppCompatActivity() {
 
     private var mainGrid: FrameLayout? = null
     private var subGrid: FrameLayout? = null
+    private var backView: Button? = null
     private var newView: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +44,7 @@ class GameViewController: AppCompatActivity() {
         window.decorView.findViewById<View>(R.id.root).doOnLayout {
             mainGrid = findViewById(R.id.mainGrid)
             subGrid = findViewById(R.id.subGrid)
+            backView = findViewById(R.id.backView)
             newView = findViewById(R.id.newView)
             resetGame(it.context)
         }
@@ -50,7 +53,7 @@ class GameViewController: AppCompatActivity() {
     private fun setupButtonView(button: Button, title: String, color: Colors, action: View.OnClickListener) {
         button.text = title
         val layer = GradientDrawable()
-        layer.cornerRadius = 90.0f
+        layer.cornerRadius = 40.0f
         layer.setStroke(9, Color.DKGRAY)
         layer.setColor(ContextCompat.getColor(this, color.getColor()))
         button.background = layer
@@ -73,9 +76,11 @@ class GameViewController: AppCompatActivity() {
 
             // Create in game controls
             if (puzzleID != null) {
+                setupButtonView(backView!!, "Back", Colors.Orange, goToSelect())
                 setupButtonView(newView!!, "Reset", Colors.Purple, newGame())
             } else {
-                setupButtonView(newView!!, "New Game", Colors.Purple, newGame())
+                setupButtonView(backView!!, "Home", Colors.Orange, goToHome())
+                setupButtonView(newView!!, "New \nGame", Colors.Purple, newGame())
             }
         }
 
@@ -320,6 +325,29 @@ class GameViewController: AppCompatActivity() {
         return true
     }
 
+    override fun onBackPressed() {
+        if (gameComplete) {
+            if (puzzleID != null) {
+                startActivity(Intent(this, SelectViewController::class.java))
+            } else {
+                startActivity(Intent(this, HomeViewController::class.java))
+            }
+        } else {
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("Puzzle not finished!")
+            alert.setMessage("Are you sure you want to quit? All progress on this puzzle will be lost.")
+            alert.setPositiveButton("Yes") { _, _ ->
+                if (puzzleID != null) {
+                    startActivity(Intent(this, SelectViewController::class.java))
+                } else {
+                    startActivity(Intent(this, HomeViewController::class.java))
+                }
+            }
+            alert.setNegativeButton("No", null)
+            alert.show()
+        }
+    }
+
     private fun newGame(): View.OnClickListener {
         return View.OnClickListener {
             if (gameComplete) {
@@ -329,6 +357,40 @@ class GameViewController: AppCompatActivity() {
                 alert.setTitle("Puzzle not finished!")
                 alert.setMessage("Are you sure you want a new puzzle? All progress on this one will be lost.")
                 alert.setPositiveButton("Yes") { _, _ -> resetGame(this) }
+                alert.setNegativeButton("No", null)
+                alert.show()
+            }
+        }
+    }
+
+    private fun goToHome(): View.OnClickListener {
+        return View.OnClickListener {
+            if (gameComplete) {
+                startActivity(Intent(this, HomeViewController::class.java))
+            } else {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Puzzle not finished!")
+                alert.setMessage("Are you sure you want to quit? All progress on this puzzle will be lost.")
+                alert.setPositiveButton("Yes") { _, _ ->
+                    startActivity(Intent(this, HomeViewController::class.java))
+                }
+                alert.setNegativeButton("No", null)
+                alert.show()
+            }
+        }
+    }
+
+    private fun goToSelect(): View.OnClickListener {
+        return View.OnClickListener {
+            if (gameComplete) {
+                startActivity(Intent(this, SelectViewController::class.java))
+            } else {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Puzzle not finished!")
+                alert.setMessage("Are you sure you want to quit? All progress on this puzzle will be lost.")
+                alert.setPositiveButton("Yes") { _, _ ->
+                    startActivity(Intent(this, SelectViewController::class.java))
+                }
                 alert.setNegativeButton("No", null)
                 alert.show()
             }

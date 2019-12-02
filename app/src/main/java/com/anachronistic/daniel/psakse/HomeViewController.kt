@@ -60,4 +60,8 @@ class HomeViewController : AppCompatActivity() {
             setupButtonView(randomView!!, "Random Puzzle", Colors.Purple, goToGame())
         }
     }
+
+    override fun onBackPressed() {
+        return
+    }
 }

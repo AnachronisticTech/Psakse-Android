@@ -104,4 +104,8 @@ class SelectViewController : AppCompatActivity() {
             getJSON()
         }
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, HomeViewController::class.java))
+    }
 }
