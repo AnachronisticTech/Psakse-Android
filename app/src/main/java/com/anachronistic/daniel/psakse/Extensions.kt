@@ -1,11 +1,12 @@
 package com.anachronistic.daniel.psakse
 
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.widget.ImageButton
 
 fun ImageButton.reset() {
     this.setAttrs("clear", R.color.gameWhite, 0, R.color.gameSBorder)
+    this.isEnabled = true
 }
 
 fun ImageButton.setAttrs(image: String, bgColor: Int, sWidth: Int, sColor: Int) {

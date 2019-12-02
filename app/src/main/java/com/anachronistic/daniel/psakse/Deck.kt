@@ -65,42 +65,23 @@ class Deck {
     }
 
     fun stringToCard(col: String, sym: String): Card {
-        var card: Card = Wild()
-        when (col) {
-            "g" -> {
-                when (sym) {
-                    "p" -> card = Normal(Symbols.Psi, Colors.Green)
-                    "a" -> card = Normal(Symbols.A, Colors.Green)
-                    "x" -> card = Normal(Symbols.Xi, Colors.Green)
-                    "e" -> card = Normal(Symbols.E, Colors.Green)
-                }
-            }
-            "y" -> {
-                when (sym) {
-                    "p" -> card = Normal(Symbols.Psi, Colors.Yellow)
-                    "a" -> card = Normal(Symbols.A, Colors.Yellow)
-                    "x" -> card = Normal(Symbols.Xi, Colors.Yellow)
-                    "e" -> card = Normal(Symbols.E, Colors.Yellow)
-                }
-            }
-            "p" -> {
-                when (sym) {
-                    "p" -> card = Normal(Symbols.Psi, Colors.Purple)
-                    "a" -> card = Normal(Symbols.A, Colors.Purple)
-                    "x" -> card = Normal(Symbols.Xi, Colors.Purple)
-                    "e" -> card = Normal(Symbols.E, Colors.Purple)
-                }
-            }
-            "o" -> {
-                when (sym) {
-                    "p" -> card = Normal(Symbols.Psi, Colors.Orange)
-                    "a" -> card = Normal(Symbols.A, Colors.Orange)
-                    "x" -> card = Normal(Symbols.Xi, Colors.Orange)
-                    "e" -> card = Normal(Symbols.E, Colors.Orange)
-                }
+        fun symbol(sym: String): Symbols {
+            return when (sym) {
+                "p"  -> Symbols.Psi
+                "a"  -> Symbols.A
+                "x"  -> Symbols.Xi
+                else -> Symbols.E
             }
         }
-        return card
+        fun color(col: String): Colors {
+            return when (col) {
+                "g"  -> Colors.Green
+                "y"  -> Colors.Yellow
+                "p"  -> Colors.Purple
+                else -> Colors.Orange
+            }
+        }
+        return Normal(symbol(sym), color(col))
     }
 
     fun finalShuffle() {
