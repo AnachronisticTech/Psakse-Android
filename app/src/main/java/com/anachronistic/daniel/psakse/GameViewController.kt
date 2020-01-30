@@ -96,6 +96,7 @@ class GameViewController: AppCompatActivity() {
                 val image = card.getFilename()
                 val color = card.getColor()
                 grid!!.buttonGrid[pos].setAttrs(image, color, 9, R.color.gameFBorder)
+                grid!!.buttonGrid[pos].isEnabled = false
                 grid!!.grid[pos] = card
             }
             deck!!.arr = deck!!.createDeckFromString(override!!.drop(12))
